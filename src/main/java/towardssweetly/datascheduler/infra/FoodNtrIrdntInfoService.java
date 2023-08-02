@@ -6,6 +6,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import towardssweetly.datascheduler.config.FoodNtrIrdntInfoApiConfiguration;
 import towardssweetly.datascheduler.infra.dto.FoodNtrIrdntInfoResponse;
 
 /**
@@ -20,17 +21,18 @@ import towardssweetly.datascheduler.infra.dto.FoodNtrIrdntInfoResponse;
  */
 @Service
 public class FoodNtrIrdntInfoService {
-    private static final String URL = "https://apis.data.go.kr/1471000/FoodNtrIrdntInfoService1/getFoodNtrItdntList1";
     private final RestTemplate restTemplate;
+    private final FoodNtrIrdntInfoApiConfiguration configuration;
 
-    public FoodNtrIrdntInfoService(RestTemplateBuilder builder) {
+    public FoodNtrIrdntInfoService(RestTemplateBuilder builder, FoodNtrIrdntInfoApiConfiguration configuration) {
         this.restTemplate = builder.build();
+        this.configuration = configuration;
     }
 
-    public FoodNtrIrdntInfoResponse getFoodNtrIrdntInfoResponse(int pageNo, int numOfRows, String type, String serviceKey) {
-        final var uri = UriComponentsBuilder.fromUriString(URL)
+    public FoodNtrIrdntInfoResponse getFoodNtrIrdntInfoResponse(int pageNo, int numOfRows, String type) {
+        final var uri = UriComponentsBuilder.fromUriString(configuration.getUrl())
                 .queryParam("pageNo", pageNo)
-                .queryParam("serviceKey", serviceKey)
+                .queryParam("serviceKey", configuration.getServiceKey())
                 .queryParam("numOfRows", numOfRows)
                 .queryParam("type", type)
                 .encode()
