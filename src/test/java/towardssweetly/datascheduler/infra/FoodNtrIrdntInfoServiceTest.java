@@ -1,15 +1,19 @@
 package towardssweetly.datascheduler.infra;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import towardssweetly.datascheduler.config.FoodNtrIrdntInfoApiConfiguration;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 class FoodNtrIrdntInfoServiceTest {
-    private static final String SERVICE_KEY = "1cM0fca7x9v9lVDH7x/Ys0Sg9uzmVsLqRY/yRtnbxpefDmZHVQf2zdR768cNW8Qrx5GlwWK0RyMa2ekGH4bJSg==";
-    private final FoodNtrIrdntInfoService foodNtrIrdntInfoService = new FoodNtrIrdntInfoService(new RestTemplateBuilder());
+    @Autowired
+    FoodNtrIrdntInfoApiConfiguration configuration;
+    @Autowired
+    FoodNtrIrdntInfoService foodNtrIrdntInfoService;
 
     @Test
     @DisplayName("https://apis.data.go.kr 주소에 실제 데이터를 요청한다.")
@@ -17,7 +21,7 @@ class FoodNtrIrdntInfoServiceTest {
         final var json = "json";
         final var pageNo = 1;
         final var numOfRows = 10;
-        final var response = foodNtrIrdntInfoService.getFoodNtrIrdntInfoResponse(pageNo, numOfRows, json, SERVICE_KEY);
+        final var response = foodNtrIrdntInfoService.getFoodNtrIrdntInfoResponse(pageNo, numOfRows, json);
         assertThat(response.getBody().getItems().size()).isEqualTo(numOfRows);
     }
 }
