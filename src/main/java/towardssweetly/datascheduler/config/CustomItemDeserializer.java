@@ -17,6 +17,9 @@ import static towardssweetly.datascheduler.infra.dto.FoodNtrIrdntInfoField.*;
  * Double 필드에 N/A 문자열이 입력되는 문제를 해결한다.
  */
 public class CustomItemDeserializer extends JsonDeserializer<FoodNtrIrdntInfoResponseItem> {
+
+    private static final String NULL = "N/A";
+
     @Override
     public FoodNtrIrdntInfoResponseItem deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         var node = (JsonNode) p.getCodec().readTree(p);
@@ -42,7 +45,7 @@ public class CustomItemDeserializer extends JsonDeserializer<FoodNtrIrdntInfoRes
     }
 
     private Double parseDouble(JsonNode node) {
-        if ("N/A".equals(node.asText())) {
+        if (NULL.equals(node.asText())) {
             return null;
         }
         return node.asDouble();
