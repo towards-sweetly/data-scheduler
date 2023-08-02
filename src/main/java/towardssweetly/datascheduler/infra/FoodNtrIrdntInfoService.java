@@ -27,7 +27,7 @@ public class FoodNtrIrdntInfoService {
         this.restTemplate = builder.build();
     }
 
-    public FoodNtrIrdntInfoResponse getData(int pageNo, int numOfRows, String type, String serviceKey) {
+    public FoodNtrIrdntInfoResponse getFoodNtrIrdntInfoResponse(int pageNo, int numOfRows, String type, String serviceKey) {
         final var uri = UriComponentsBuilder.fromUriString(URL)
                 .queryParam("pageNo", pageNo)
                 .queryParam("serviceKey", serviceKey)
