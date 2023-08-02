@@ -11,10 +11,8 @@ import java.util.List;
 public class FoodNtrIrdntInfoResponseBody {
     @JsonProperty("pageNo")
     private int pageNumber;
-    @JsonProperty("totalCount")
     private int totalCount;
     @JsonProperty("numOfRows")
     private int count;
-    @JsonProperty("items")
     private List<FoodNtrIrdntInfoResponseItem> items;
 }
